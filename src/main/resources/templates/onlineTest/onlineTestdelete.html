@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<title>Insert title here</title>
+</head>
+<body>
+	<form id="datadeleteoln" action="#" th:object="${onlineTest}"
+		method="post">
+		<td><input type="text"  id="idoln" 
+			th:field="*{idoln}" hidden="hidden" ></input></td>
+		<div>
+			<div class="col-md-12">
+				<i class="fas fa-trash fa-5x" style="margin-right: 10%;"></i>anda
+				yakin ingin menghapus periode <label th:text="*{period}" /> ?
+			</div>
+			<div colspan="2" align="right">
+				<button type="button"
+					style="margin-top: 2%; background-color: orange; color: white;"
+					class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+				<button type="submit"
+					style="margin-top: 2%; background-color: red; color: white;"
+					id="form-klg-add" class="btn btn-success">Ya</button>
+			</div>
+		</div>
+	</form>
+</body>
+<script>
+	//suplier edit
+	$('#datadeleteoln').submit(function() {
+
+		formData = $('#datadeleteoln').serialize();
+		var id = document.getElementById("idoln").value;
+		
+		var url = "deleteoln/" + id;
+		alert(url);
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : formData,
+			success : function(result) {
+
+				loadlistoln();
+			//	alert("Data telah dihapus");
+				refreshpage();
+			}
+		});
+		return false;
+	});
+</script>
+</html>

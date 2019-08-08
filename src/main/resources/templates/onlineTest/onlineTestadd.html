@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- //harus ada form digunakan ketika ngambil dari server ke klient pakai get
+	// kalau menikkan dari klient ke server pakai post -->
+
+	<form id="dataaddoln" action="#" th:object="${klg2}" method="post">
+		<div class="row">
+			<div class="form-group col-md-12"margin-left: 2%;>
+				<label>Jenis Test</label> <select style="width: 100%;" align="left"
+					class="form-control" id="olntest" name="test.name">
+					<option value="0">-- pilih --</option>
+					<option th:each="test : ${listTestType}" th:value="${test.idtest}"
+						th:utext="${test.name}" style="widht: 100%;" />
+				</select>
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="form-group col-md-12">
+				<div class="btn-group" role="group" aria-label="Basic example"
+					style="float: right;">
+					<button type="button"
+						style="margin-top: 2%; background-color: orange; color: white;"
+						class="btn btn-secondary" data-dismiss="modal">Batal</button>
+					<button type="submit"
+						style="margin-top: 2%; background-color: blue; color: white;"
+						id="form-klg-add" class="btn btn-success">Tambah</button>
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+</body>
+<script>
+	$('#dataaddoln').submit(function() {
+
+		formData = $('#dataaddoln').serialize();
+
+/* 		var name = document.getElementById("klgname").value;
+		var susunan = document.getElementById("klgfamilytype").value;
+		var hubungan = document.getElementById("klgfamilyrelation").value;
+
+		if (name == "" || susunan == "" || hubungan == "") {
+			alert("kolom bertanda * wajib diisi ")
+		} else {
+ */			$.ajax({
+				url : '/saveaddoln',
+				type : 'POST',
+				data : formData,
+				success : function(result) {
+					loadlistoln();
+					alert("Data telah ditambahkan");
+					refreshpage();
+				}
+			});
+		}
+		return false;
+	});
+</script>
+</html>

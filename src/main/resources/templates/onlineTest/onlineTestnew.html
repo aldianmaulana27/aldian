@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- //harus ada form digunakan ketika ngambil dari server ke klient pakai get
+	// kalau menikkan dari klient ke server pakai post -->
+
+	<form id="datanewoln" action="#" th:object="${onlineTest2}" method="post">
+		<div class="row">
+			<div class="form-group col-md-4	">
+				<label>tgl. Tes *</label> <input type="date" min="1900-01-01"
+					max="2019-08-01" class="form-control" id="olnstart" name="testDate"
+					style="width: 100%" />
+			</div>
+			<div class="form-group col-md-4"margin-left: 2%;>
+				<label>Tgl. Berakhir Tes *</label> <input type="date"
+					min="1900-01-01" max="2019-08-01" style="width: 100%;" align="left"
+					class="form-control" id="olnend" name="expiredTest">
+
+			</div>
+			<div class="form-group col-md-4"margin-left: 2%;>
+				<label>Akses User *</label> <select style="width: 100%;"
+					align="left" class="form-control" id="olnuser" name="userAccess">
+					<option value="0">-- pilih --</option>
+					<option>Inside</option>
+					<option>Outside</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-12" align="right">
+				<button type="button" class="btn btn-success"
+					style="background-color: rgb(0, 0, 102);" id="btn-add"
+					onclick="addform1()">Tambah Tes</button>
+			</div>
+		</div>
+		<thead>
+			<tr style="border-bottom: 3px solid rgb(0, 0, 102);">
+				<th style="width: 100%;"></th>
+			</tr>
+		</thead>
+		</table>
+
+		<table style="width: 100%;" id="tbonlineTest"
+			class="table table-striped">
+			<thead>
+				<tr
+					style="border-bottom: 3px solid rgb(0, 0, 102); color: rgb(0, 0, 102);">
+					<th class="no-sort">No</th>
+					<th>Jenis Tes</th>
+					<th class="no-sort">#</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr
+					style="border-top: 2px solid rgb(0, 0, 102); color: rgb(0, 0, 102);"
+					th:each="testType : ${listTestType}">
+
+					<td style="width: 25%;" th:text="${testType.idtest}">No</td>
+					<td style="width: 50%;" th:text="${testType.name}">Jenis Tes</td>
+					<td style="width: 25%;"><i class="fa fa-trash"
+						
+						onclick="EditFunction(this);" data-target="#deleteonlineTestModal">
+					</i></td>
+				</tr>
+			</tbody>
+
+			<tfoot>
+			</tfoot>
+
+		</table>
+		<div class="row">
+			<div class="form-group col-md-12">
+				<div class="btn-group" role="group" aria-label="Basic example"
+					style="float: right;">
+					<button type="button"
+						style="margin-top: 2%; background-color: orange; color: white;"
+						class="btn btn-secondary" data-dismiss="modal">Batal</button>
+					<button type="submit"
+						style="margin-top: 2%; background-color: rgb(0, 0, 102); color: white;"
+						id="form-oln-add" class="btn btn-success">Simpan & kirim</button>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</body>
+<script>
+	$('#datanewoln').submit(function() {
+
+		formData = $('#datanewoln').serialize();
+alert(formData);
+/* 		var name = document.getElementById("klgname").value;
+		var susunan = document.getElementById("klgfamilytype").value;
+		var hubungan = document.getElementById("klgfamilyrelation").value;
+
+		if (name == "" || susunan == "" || hubungan == "") {
+			alert("kolom bertanda * wajib diisi ")
+		} else {
+ */			$.ajax({
+				url : '/savenewoln',
+				type : 'POST',
+				data : formData,
+				success : function(result) {
+					loadlistoln();
+					alert("Data telah ditambahkan");
+					refreshpage();
+				}
+			});
+		}
+		return false;
+	});
+</script>
+</html>

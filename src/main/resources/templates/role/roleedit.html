@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form id="dataeditrl" action="#" th:object="${role}" method="post">
+		<input type="text" th:field="*{idrl}" hidden="hidden" /> <input
+			type="text" th:field="*{createdOn}" hidden="hidden" /> <input
+			type="text" th:field="*{createdBy}" hidden="hidden" />
+		<div class="row">
+			<div class="form-group col-md-6">
+				<label>Kode *</label> <input type="text" class="form-control"
+					id="rlcode" th:field="*{code}" style="width: 100%" />
+			</div>
+			<div class="form-group col-md-6">
+				<label>Nama *</label> <input type="text" class="form-control"
+					rows="5" id="rlname" th:field="*{name}" style="width: 100%">
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-12">
+				<div class="btn-group" role="group" aria-label="Basic example"
+					style="float: right;">
+					<button type="button"
+						style="margin-top: 2%; background-color: orange; color: white;"
+						class="btn btn-secondary" data-dismiss="modal">Batal</button>
+					<button type="submit"
+						style="margin-top: 2%; background-color: blue; color: white;"
+						id="form-klg-add" class="btn btn-success">Simpan</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+<script>
+	$('#dataeditrl').submit(function() {
+		formData = $('#dataeditrl').serialize();
+		var name = document.getElementById("rlname").value;
+		var code = document.getElementById("rlcode").value;
+		if (name == "" && code == "") {
+					alert("kolom bertanda * wajib diisi")
+		} else if (name == "") {
+				alert("kolom bertanda * wajib diisi")
+		} else if (code == "") {
+			 alert("kolom bertanda * wajib diisi")
+		} else {
+			$.ajax({
+				url : '/saveeditrl',
+				type : 'POST',
+				data : formData,
+				success : function(result) {
+					if (result == 1) {
+						loadlistrl();
+						refreshpage();
+									alert("Data telah ditambahkan");
+						
+									}else{
+						 alert("Kode sudah digunakan"); 
+					}
+				}
+			});
+		}
+		return false;
+	});
+</script>
+</html>

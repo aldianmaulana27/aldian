@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<title>Insert title here</title>
+</head>
+<body>
+	<form id="datadeleterl" action="#" th:object="${role}"
+		method="post">
+		<input type="text"  id="idrl" name="code"
+			th:field="*{idrl}" hidden="hidden" />
+		<input type="text" th:field="*{createdOn}" hidden="hidden" /> 
+		<input type="text" th:field="*{createdBy}" hidden="hidden" /> 
+		<input type="text" th:field="*{modifiedOn}" hidden="hidden" /> 
+		<input type="text" th:field="*{modifiedBy}" hidden="hidden" />
+		<input type="text" th:field="*{name}" hidden="hidden" /> 
+		<input type="text" th:field="*{code}" hidden="hidden" />
+			
+		<div>
+			<div class="col-md-12">
+				<i class="fas fa-trash fa-5x" style="margin-right: 10%;"></i>anda
+				yakin ingin menghapus agama <label th:text="*{name}" /> ?
+			</div>
+		<div class="row">
+			<div class="form-group col-md-12">
+				<div class="btn-group" role="group" aria-label="Basic example"
+					style="float: right;">
+					<button type="button"
+						style="margin-top: 2%; background-color: orange; color: white;"
+						class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+					<button type="submit"
+						style="margin-top: 2%; background-color: red; color: white;"
+						id="form-klg-add" class="btn btn-success">Ya</button>
+				</div>
+			</div>
+		</div>
+
+		</div>
+	</form>
+</body>
+<script>
+	//suplier edit
+	$('#datadeleterl').submit(function() {
+
+		formData = $('#datadeleterl').serialize();
+		var id = document.getElementById("idrl").value;
+		
+		var url = "deleterl/" + id;
+	//	alert(url);
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : formData,
+			success : function(result) {
+				loadlistrl();
+				alert("Data telah dihapus");
+				refreshpage();
+			}
+		});
+		return false;
+	});
+</script>
+</html>

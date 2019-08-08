@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container">
+		Master data supplier <br>
+
+		<div align="center">
+			<button type="button" class="btn btn-success" id="btn-add"
+				onclick="addform()" >Tambah
+				Supplier</button>
+		</div>
+
+		<!-- The Modal -->
+		<div class="modal" id="supplierModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Creat Supplier</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div class="box-body" id="nonlistsupplier"></div>
+					</div>
+					<!-- 
+					Modal footer
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+
+ -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="box-body" id="listsupplier"></div>
+</body>
+<script >
+	loadlistsply();
+	function loadlistsply() {
+		//	var nama=document.getElementById("splrname").value;
+		var nama = "";
+		var url = "";
+		//alert(nama);
+		if (nama == "") {
+			url = "listsply";
+		} else {
+			url = "listsplybyname/" + nama;
+		}
+		//alert(url);
+		$.ajax({
+			url : url,
+			type : 'get',
+			dataType : 'html',
+			success : function(result) {
+				$('#listsupplier').html(result);
+			}
+		});
+
+	}
+
+	function addform() {
+		$.ajax({
+			url : 'suppliernew',
+			type : 'get',
+			dataType : 'html',
+			success : function(result) {
+				$("#supplierModal").modal();
+				$('#nonlistsupplier').html(result);
+			}
+		});
+	}
+	function closemodal() {
+		$('#supplierModal').hide();
+		$('.modal-backdrop').hide();
+		$('.modal-backdrop').remove();
+	}
+</script>
+</html>

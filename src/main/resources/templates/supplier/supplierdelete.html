@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form id="datadeletesply" action="#" th:object="${supplier}"
+		method="post">
+
+		<table style="width: 100%" align="center">
+			<tr>
+				<td></td>
+				<td><input type="text" th:field="*{idsply}" readonly="readonly"
+					disabled="disabled" /></td>
+			</tr>
+			<tr>
+				<td>Supplier Name:</td>
+				<td><input type="text" th:field="*{nama}" disabled="disabled" /></td>
+			</tr>
+			<tr>
+				<td>Supplier alamat:</td>
+				<td><input type="text" th:field="*{alamat}" disabled="disabled" /></td>
+			</tr>
+
+			<tr>
+				<td colspan="2" align="left">
+					<button type="submit" id="form-prod-add" class="btn btn-danger">Delete</button>
+				</td>
+				<td colspan="2" align="right">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+<script>
+	//suplier edit
+
+ $('#datadeletesrlg').submit(function() {
+	 formData = $('#datadeleterlg').serialize();
+	 var id=document.getElementById("idrlg").value;
+	 var url = "deleterlg/"+id;
+	
+	 $.ajax({
+	 url : url,
+	 type : 'POST',
+	 data : formData,
+	 success : function(result) {
+	
+	 loadlistrlg();
+	 alert("Data telah dihapus");
+	 }
+	 });
+	 return false;
+	 });
+
+	/* confirm delete */
+/* 	$('#datadeletesply').submit(function() {
+		var txt;
+		var r = confirm("Akan dihapus ?????");
+		if (r == true) {
+			formData = $('#datadeletesply').serialize();
+			var id = document.getElementById("idsply").value;
+			var url = "deletesply/" + id;
+			//alert(id);
+
+			$.ajax({
+				url : url,
+				type : 'POST',
+				data : formData,
+				success : function(result) {
+
+					if (result == "1") {
+						alert("Sukses delete");
+						loadlistsply();
+					} else {
+						alert("Tidak bisa, supplier masih digunakan product");
+					}
+				}
+			});
+		} else {
+			txt = "You pressed Cancel!";
+		}
+		return false;
+	}); */
+</script>
+</html>

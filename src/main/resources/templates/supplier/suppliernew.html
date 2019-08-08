@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<br />
+
+<!-- //harus ada form digunakan ketika ngambil dari server ke klient pakai get
+	// kalau menikkan dari klient ke server pakai post -->	
+
+	<form id="datanewsply" action="#" th:object="${supplier2}"
+		method="post">
+		<table style="width:100%" align="center">
+			<tr>
+				<td style="width:30%;">Supplier Name:</td>
+				<td style="width:70%;"><input type="text" id="splrname" name="nama" /></td>
+			</tr>
+			<tr>
+				<td style="width:30%;">Supplier Alamat:</td>
+				<td style="width:70%;"><input type="text" name="alamat" /></td>
+			</tr>
+			<tr>
+				<td style="width:30%;">Supplier Email:</td>
+				<td style="width:70%;"><input type="text" name="email" /></td>
+			</tr>			
+			<tr>
+				<td style="width:30%;">Supplier Tanggal Join:</td>
+				<td style="width:70%;"><input type="date" name="tanggal" /></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="left">
+					<button type="submit" id="form-prod-add" class="btn btn-success">Save</button>
+				</td>
+				<td  colspan="2" align="right">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</td>
+			</tr>
+		</table>
+
+
+	</form>
+	
+</body>
+<script>
+$('#datanewsply').submit(function() {
+	formData = $('#datanewsply').serialize();
+	//melakukan serialisasi objek datanewdisplay
+
+	$.ajax({
+		url : '/savesply',
+		type : 'POST',
+		data : formData,
+		success : function(result) {
+
+			if (result == "1") {
+				alert("Sukses data ditambahkan");
+				loadlistsply();
+				closemodal();
+			} else {
+				alert("Tidak bisa, Email sudah digunakan");
+			}
+		}
+	});
+	return false;
+});
+</script>
+</html>

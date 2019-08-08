@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container">
+	
+		<!-- The Modal -->
+		<div class="modal fade" id="onlineTestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+	<div class="modal-content" style="border-radius:10px 10px 7px 7px;border: 2px solid rgb(0,0,102);">
+ 
+					<div class="modal-header" style="background-color:rgb(0,0,102);border-radius: 5px 5px 0px 0px; color:white;">
+
+					<!-- Modal Header -->
+						<button type="button" class="close"  data-dismiss="modal">&times;</button>
+						<h3 class="modal-title">Aktivasi Akun Tes</h3>
+					</div>
+						
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div class="box-body" id="nonlistonlineTest"></div>
+					</div>
+					<!-- 
+					Modal footer-->
+					<div class="modal-footer">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="container">
+	
+		<!-- The Modal -->
+		<div class="modal fade" id="addonlineTestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+	<div class="modal-content" style="border-radius:10px 10px 7px 7px;border: 2px solid rgb(0,0,102);">
+ 
+					<div class="modal-header" style="background-color:rgb(0,0,102);border-radius: 5px 5px 0px 0px; color:white;">
+					<!-- Modal Header -->
+						<button type="button" class="close"  data-dismiss="modal">&times;</button>
+						<h3 class="modal-title">Tambah Tes</h3>
+					</div>
+					
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div class="box-body" id="nonaddlistonlineTest"></div>
+					</div>
+					<!-- 
+					Modal footer-->
+					<div class="modal-footer">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<div class="container">
+	
+		<!-- The Modal -->
+		<div class="modal fade" id="pilihanonlineTestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+	<div class="modal-content" style="border-radius:10px 10px 7px 7px;border: 2px solid rgb(0,0,102);">
+ 
+					<div class="modal-header" style="background-color:rgb(0,0,102);border-radius: 5px 5px 0px 0px; color:white;">
+
+					<!-- Modal Header -->
+						<button type="button" class="close"  data-dismiss="modal">&times;</button>
+						<h3 class="modal-title">Pilihan Tes</h3>
+					</div>
+					
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div class="box-body" id="nonpilihanlistonlineTest"></div>
+					</div>
+					<!-- 
+					Modal footer-->
+					<div class="modal-footer">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+		<div class="container">
+	
+		<!-- The Modal -->
+		<div class="modal fade" id="deleteonlineTestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content" style="border-radius:10px 10px 7px 7px;border: 2px solid rgb(153,0,0);">
+ 
+					<div class="modal-header" style="background-color:rgb(153,0,0);border-radius: 5px 5px 0px 0px; color:white;">
+
+					<!-- Modal Header -->
+						<button type="button" class="close"  data-dismiss="modal">&times;</button>
+						<h3 class="modal-title">Hapus Keluarga?</h3>
+					</div>
+					
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div class="box-body" id="nondeletelistonlineTest"></div>
+					</div>
+					<!-- 
+					Modal footer-->
+					<div class="modal-footer">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+		<div class="box-body" id="listonlineTest"></div>
+</body>
+<script >
+	loadlistoln();
+	function loadlistoln() {
+		//	var nama=document.getElementById("splrname").value;
+	/* 	var nama = "";
+		var url = "";
+		//alert(nama);
+		if (nama == "") {
+			url = "listklg";
+		} else {
+	 */		url = "listoln";
+		
+		//alert(url);
+		$.ajax({
+			url : url,
+			type : 'get',
+			dataType : 'html',
+			success : function(result) {
+				$('#listonlineTest').html(result);
+			}
+		});
+	}
+
+function refreshpage(){
+		
+		$.ajax({
+			url : '/onlineTest',
+			type : 'get',
+			dataType : 'html',
+			success : function(result) {
+				closemodal();
+				$('#fragment').html(result);
+			}
+		});
+		return false;
+	}
+	
+	function closemodal() {
+		$('#onlineTestModal').hide();
+		$('.modal-backdrop').hide();
+		$('.modal-backdrop').remove();
+
+	}
+	
+	
+</script>
+</html>

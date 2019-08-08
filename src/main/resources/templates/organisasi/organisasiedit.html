@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form id="dataeditorg" action="#" th:object="${organisasi}"
+		method="post">
+		<input type="text" th:field="*{idorg}" hidden="hidden" /> <input
+			type="text" th:field="*{createdOn}" hidden="hidden" /> <input
+			type="text" th:field="*{createdBy}" hidden="hidden" />
+		<div class="row">
+			<div class="form-group col-md-6	">
+				<label>Nama Organisasi *</label> <input type="text"
+					class="form-control" id="orgname" th:field="*{name}" style="width: 100%" />
+			</div>
+			<div class="form-group col-md-6"margin-left: 2%;>
+				<label>Jabatan *</label> <input type="text" class="form-control"
+					id="orgposition" th:field="*{position}" style="width: 100%" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-6	">
+				<label>Tahun Masuk *</label> <select style="width: 100%;"
+					align="center" class="form-control" id="orgentry" th:field="*{entryYear}">
+					<option value="">-- pilih --</option>
+					<option th:each="year : ${yearItem}" th:value="${year.value}"
+						th:text="${year.key}" />
+				</select>
+			</div>
+			<div class="form-group col-md-6"margin-left: 2%;>
+				<label>Tahun Keluar *</label> <select style="width: 100%;"
+					align="center" class="form-control" id="orgexit" th:field="*{exitYear}">
+					<option value="">-- pilih --</option>
+					<option th:each="year : ${yearItem}" th:value="${year.value}"
+						th:text="${year.key}" />
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-12	">
+				<label>Tanggung Jawab</label> <input type="text"
+					class="form-control" id="orgresponsibility" th:field="*{responsibility}"
+					style="width: 100%" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-12	">
+				<label>Catatan</label>
+				<textarea class="form-control" rows="5" id="orgnotes" th:field="*{notes}"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-12">
+				<div class="btn-group" role="group" aria-label="Basic example"
+					style="float: right;">
+					<button type="button"
+						style="margin-top: 2%; background-color: orange; color: white;"
+						class="btn btn-secondary" data-dismiss="modal">Batal</button>
+					<button type="submit"
+						style="margin-top: 2%; background-color: blue; color: white;"
+						id="form-klg-add" class="btn btn-success">Simpan</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+<script>
+	//suplier edit
+	$('#dataeditorg').submit(function() {
+		formData = $('#dataeditorg').serialize();
+		var name = document.getElementById("orgname").value;
+		var position = document.getElementById("orgposition").value;
+		var entry = document.getElementById("orgentry").value;
+		var exit = document.getElementById("orgexit").value;
+		/* 		var numchk=new RegExp("^[0-9]*$");
+		 if(numchk.test($('#entryYear').val())){
+		 alert("a")
+		
+		 }else{
+		 alert("b") */
+		if (name == "" || position == "" || entry == "" || exit == "") {
+		alert("kolom bertanda * wajib diisi ")
+	///	} else if (entry > exit) {
+			//alert("Tahun keluar harus lebih kecil")
+		} else {
+			$.ajax({
+				url : '/saveeditorg',
+				type : 'POST',
+				data : formData,
+				success : function(result) {
+					loadlistorg();
+					alert("Data telah diubah");
+					refreshpage();
+				}
+			});
+		}
+		return false;
+
+	});
+</script>
+</html>

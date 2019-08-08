@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form id="dataeditsply" action="#" th:object="${supplier}"
+		method="post">
+
+		<table style="width:100%" align="center" >
+			<tr>
+				<td></td>
+				<td><input type="text" th:field="*{idsply}" readonly="readonly" />
+				</td>
+			</tr>
+			<tr>
+				<td>Supplier Name:</td>
+				<td><input type="text" th:field="*{nama}" /></td>
+			</tr>
+			<tr>
+				<td>Supplier alamat:</td>
+				<td><input type="text" th:field="*{alamat}" /></td>
+			</tr>
+			<tr>
+				<td>Supplier Email:</td>
+				<td><input type="text" th:field="*{email}" /></td>
+			</tr>
+			<tr>
+				<td>Supplier Tanggal Join:</td>
+				<td><input type="date" th:field="*{tanggal}" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="left">
+					<button type="submit" id="form-prod-add" class="btn btn-success">Save</button>
+				</td>
+				<td colspan="2" align="right">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+<script>
+	//suplier edit
+	$('#dataeditsply').submit(function() {
+		formData = $('#dataeditsply').serialize();
+		$.ajax({
+			url : '/savesply',
+			type : 'POST',
+			data : formData,
+			success : function(result) {
+
+				loadlistsply();
+				alert("Data telah diubah");
+				closemodal();
+			}
+		});
+		return false;
+	});
+</script>
+</html>

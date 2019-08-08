@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<button type="button" class="btn btn-warning" onclick="loadlistprod();">Reload
+		data</button>
+	<table id="tbproduct" class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>ID Product</th>
+				<th>Name</th>
+				<th>Brand</th>
+				<th>Made in</th>
+				<th>Price</th>
+			<!-- 	<th>Supplier ID</th> -->
+				<th>pppp</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="product : ${listProduct}">
+				<td th:text="${product.idprod}">Product ID</td>
+				<td th:text="${product.nama}">Name</td>
+				<td th:text="${product.brand}">Brand</td>
+				<td th:text="${product.made}">Made in</td>
+				<td th:text="${product.price}">Price</td>
+				<!--  ${product.id_supplier} untuk merubah menjadi integer (ID supplierny)  -->
+<!-- 				<td th:text="${product.sply.nama}">Supplier ID</td> -->
+				<td>
+					<button type="button" class="btn btn-warning" id="btn-edit"
+						th:href="@{'/prodedit/' + ${product.idprod}}"
+						onclick="EditFunction(this);" data-toggle="modal"
+						data-target="#editproductModal">Edit</button>
+
+					<button type="button" class="btn btn-danger" id="btn-delete"
+						th:href="@{'/prodeditdel/' + ${product.idprod}}"
+						onclick="EditFunction(this);" data-toggle="modal"
+						data-target="#deleteproductModal">Delete</button>
+				</td>
+			</tr>
+
+		</tbody>
+
+		<tfoot>
+		</tfoot>
+	</table>
+
+</body>
+<script>
+	function EditFunction(d) {
+		var x = d.getAttribute("href");
+		$.ajax({
+			url : x,
+			type : 'get',
+			dataType : 'html',
+			success : function(result) {
+				$("#productModal").modal();
+				$('#nonlistproduct').html(result);
+			}
+		});
+
+	}
+	
+	$(document).ready(function() {
+		$('#tbproduct').dataTable( {
+			  "lengthMenu": [ 2, 3, 5 ]
+			} );
+	} );	
+</script>
+
+</html>

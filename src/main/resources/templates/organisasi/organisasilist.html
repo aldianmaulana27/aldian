@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- 	<script src="../js/jquery.dataTables.min.js"></script>
+<link href="../css/jquery.dataTables.min.css" rel="stylesheet"> -->
+
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="row">
+
+		<div class="form-group col-md-6">
+			<div class="form-group col-md-8">
+				<h3>
+					Organisasi <i class="fa fa-plus-circle"
+						style="font-size: 24px; cursor: pointer; color: rgb(0, 0, 102);"
+						id="btn-add" onclick="addform()"></i>
+				</h3>
+			</div>
+		</div>
+	</div>
+	<table style="width: 100%;">
+		<thead>
+			<tr style="border-bottom: 3px solid rgb(0, 0, 102);">
+				<th style="width: 100%;"></th>
+			</tr>
+		</thead>
+	</table>
+	<table style="width: 100%;" id="tborganisasi"
+		class="table table-striped">
+		<thead>
+			<tr
+				style="border-bottom: 3px solid rgb(0, 0, 102); color: rgb(0, 0, 102);">
+
+				<th>name</th>
+				<th class="no-sort">Jabatan</th>
+				<th class="no-sort">Periode</th>
+				<th class="no-sort">#</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr
+				style="border-top: 2px solid rgb(0, 0, 102); color: rgb(0, 0, 102);"
+				th:each="organisasi : ${listOrganisasi1}">
+
+				<td style="width: 30%;" th:text="${organisasi.name}">Nama</td>
+				<td style="width: 30%;" th:text="${organisasi.position}">Jabatan</td>
+				<td style="width: 30%;"
+					th:text="${organisasi.entryYear + ' s.d '+ organisasi.exitYear}">Jabatan</td>
+				<td style="width: 10%;">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button"
+							data-toggle="dropdown" style="background-color: rgb(0, 0, 102);">
+							More <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li class="dropdown-item"
+								th:href="@{'/orgedit/' + ${organisasi.idorg}}"
+								onclick="EditFunctionEdit(this);"
+								data-target="#editorganisasiModal"><a>Ubah</a></li>
+							<li class="dropdown-item"
+								th:value="@{'/orgeditdel/' + ${organisasi.idorg}}"
+								onclick="EditFunction(this);"
+								data-target="#deleteorganisasiModal"><a>Hapus</a></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+
+		<tfoot>
+		</tfoot>
+
+	</table>
+	<!-- 	<div align="right">
+			<br>
+			<button type="button" class="btn btn-warning btn-rounded:50%"
+				id="prevpage">
+				<i style="color: white" class="fa fa-long-arrow-left"></i> previous
+			</button>
+			<button type="button" class="btn btn-warning btn-radius:16px"
+				id="nextpage">
+				next <i style="color: white" class="fa fa-long-arrow-right"></i>
+			</button>
+		</div>
+</body>
+ -->
+	<script>
+		function EditFunctionEdit(d) {
+			var x = d.getAttribute("href");
+			$.ajax({
+				url : x,
+				type : 'get',
+				dataType : 'html',
+				success : function(result) {
+					$("#editorganisasiModal").modal();
+					$('#noneditlistorganisasi').html(result);
+				}
+			});
+
+		}
+
+		function EditFunction(d) {
+			var x = d.getAttribute("value");
+			$.ajax({
+				url : x,
+				type : 'get',
+				dataType : 'html',
+				success : function(result) {
+					$("#deleteorganisasiModal").modal();
+					$('#nondeletelistorganisasi').html(result);
+				}
+			});
+
+		}
+
+		function addform() {
+			$.ajax({
+				url : 'organisasinew',
+				type : 'get',
+				dataType : 'html',
+				success : function(result) {
+					$("#organisasiModal").modal();
+					$('#nonlistorganisasi').html(result);
+				}
+			});
+		}
+
+		$(document).ready(function() {
+			$('#tborganisasi').dataTable({
+				"dom" : 'rt',
+				"ordering" : true,
+				"columnDefs" : [ {
+					orderable : false,
+					targets : "no-sort"
+				} ],
+			/* 	"initComplete" : function(settings, json) {
+				    $('.dataTables_paginate').appendTo('body');
+				} */
+			});
+			oTable = $('#tborganisasi').DataTable();
+			$('#asc').on('click', function() {
+				oTable.order([ 0, 'asc' ]).draw();
+			});
+			oTable = $('#tborganisasi').DataTable();
+			$('#desc').on('click', function() {
+				oTable.order([ 0, 'desc' ]).draw();
+			});
+			oTable = $('#tborganisasi').DataTable();
+			$('#nextpage').on('click', function() {
+				oTable.page('next').draw(false);
+			});
+			oTable = $('#tborganisasi').DataTable();
+			$('#prevpage').on('click', function() {
+				oTable.page('previous').draw(false);
+			});
+
+			oTable = $('#tborganisasi').DataTable();
+			$('#10').on('click', function() {
+				oTable.page.len(10).draw(false);
+			});
+			oTable = $('#tborganisasi').DataTable();
+			$('#20').on('click', function() {
+				oTable.page.len(20).draw(false);
+			});
+
+			oTable = $('#tborganisasi').DataTable();
+			$('#30').on('click', function() {
+				oTable.page.len(30).draw(false);
+			});
+
+			oTable = $('#tborganisasi').DataTable();
+			$('#40').on('click', function() {
+				oTable.page.len(40).draw(false);
+			});
+
+			oTable = $('#tborganisasi').DataTable();
+			$('#50').on('click', function() {
+				oTable.page.len(50).draw(false);
+			});
+
+			var oTable = $('#tborganisasi').DataTable();
+			$('#btn-search').click(function() {
+				oTable.search($("#search-field").val()).draw();
+			});
+
+			// EDIT: Capture enter press as well
+			$("#search-field").keypress(function(e) {
+				// You can use $(this) here, since this once again refers to your text input            
+				if (e.which === 13) {
+					e.preventDefault(); // Prevent form submit
+					oTable.search($(this).val()).draw();
+				}
+			});
+
+		});
+	</script>
+</html>

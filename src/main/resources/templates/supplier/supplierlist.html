@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<button type="button" class="btn btn-warning" onclick="loadlistsply();">Reload
+		data</button>
+	<table id="tbsupplier" class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>ID Product</th>
+				<th>alamat</th>
+				<th>nama</th>
+				<th>email</th>
+				<th>tanggal</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="supplier : ${listSply}">
+				<td th:text="${supplier.idsply}">Product ID</td>
+				<td th:text="${supplier.alamat}">Name</td>
+				<td th:text="${supplier.nama}">Brand</td>
+				<td th:text="${supplier.email}">Made in</td>
+				<td th:text="${#dates.format(supplier.tanggal, 'yyyy-MMM-dd')}">Tanggal Join</td>
+				<td>
+					<button type="button" class="btn btn-warning" id="btn-edit"
+						th:href="@{'/splyedit/' + ${supplier.idsply}}"
+						onclick="EditFunction(this);" data-toggle="modal"
+						data-target="#editsupplierModal">Edit</button>
+
+					<button type="button" class="btn btn-danger" id="btn-delete"
+						th:href="@{'/splyeditdel/' + ${supplier.idsply}}"
+						onclick="EditFunction(this);" data-toggle="modal"
+						data-target="#deletesupplierModal">Delete</button>
+				</td>
+			</tr>
+
+		</tbody>
+
+		<tfoot>
+		</tfoot>
+	</table>
+
+</body>
+<script>
+	function EditFunction(d) {
+		var x = d.getAttribute("href");
+		$.ajax({
+			url : x,
+			type : 'get',
+			dataType : 'html',
+			success : function(result) {
+				$("#supplierModal").modal();
+				$('#nonlistsupplier').html(result);
+			}
+		});
+
+	}
+	
+	$(document).ready(function() {
+		$('#tbsupplier').dataTable( {
+			  "lengthMenu": [ 2, 3, 5 ]
+			} );
+	} );	
+</script>
+
+</html>

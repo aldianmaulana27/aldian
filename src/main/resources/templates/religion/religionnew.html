@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- //harus ada form digunakan ketika ngambil dari server ke klient pakai get
+	// kalau menikkan dari klient ke server pakai post -->
+
+	<form id="datanewrlg" action="#" th:object="${rlg2}" method="post">
+		<div class="row">
+			<div class="form-group col-md-12	">
+				<label>Nama Agama *</label> <input type="text" class="form-control"
+					id="rlgname" name="name" style="width: 100%" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-12	">
+				<label>Deskripsi </label>
+				<textarea class="form-control" rows="5" id="rlgdescription"
+					name="description"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-12">
+				<div class="btn-group" role="group" aria-label="Basic example"
+					style="float: right;">
+					<button type="button"
+						style="margin-top: 2%; background-color: orange; color: white;"
+						class="btn btn-secondary" data-dismiss="modal">Batal</button>
+					<button type="submit"
+						style="margin-top: 2%; background-color: blue; color: white;"
+						id="form-klg-add" class="btn btn-success">Simpan</button>
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+</body>
+<script>
+	$('#datanewrlg').submit(function() {
+		formData = $('#datanewrlg').serialize();
+		var name = document.getElementById("rlgname").value;
+		if (name == "") {
+			alert("kolom bertanda * wajib diisi ")
+		} else {
+			$.ajax({
+				url : '/saverlg',
+				type : 'POST',
+				data : formData,
+				success : function(result) {
+					loadlistrlg();
+						alert("Data telah ditambahkan");
+					refreshpage();
+				}
+			});
+		}
+		return false;
+	});
+</script>
+</html>

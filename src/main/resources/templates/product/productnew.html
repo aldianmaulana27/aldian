@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<br />
+
+	<!-- //harus ada form digunakan ketika ngambil dari server ke klient pakai get
+	// kalau menikkan dari klient ke server pakai post -->
+
+	<form id="datanewprod" action="#" th:object="${product2}" method="post">
+		<table style="width:100%" align="center" >
+		<h3>New Product</h3>
+			<tr>
+				<td style="width:30%;" >Product Name:</td>
+				<td style="width:70%;"  ><input type="text" id="prodname" name="nama"  style="width:100%" /></td>
+			</tr>
+			<tr>
+				<td style="width:30%;">Product Brand:</td>
+				<td style="width:70%;"><input type="text" name="brand" style="width:100%;" /></td>
+			</tr>
+			<tr>
+				<td style="width:30%;">Product Made In:</td>
+				<td style="width:70%;"><input type="text" name="made" style="width:100%;"/></td>
+			</tr>
+
+			<tr>
+				<td style="width:30%;">Product Price:</td>
+				<td style="width:70%;"><input type="text" th:field="*{price}" style="width:100%;"/></td>
+			</tr>
+			<tr>
+				<td style="width:30%;">Product id Supplier:</td>
+				<td style="width:70%;"><select name="id_supplier">
+						<option value="0">-- supplier id --</option>
+						<option th:each="sply : ${listSupplier}" th:value="${sply.idsply}"
+							th:utext="${sply.nama}" style="widht:100%;" />
+				</select></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="left">
+					<button type="submit" id="form-prod-add" class="btn btn-success">Save</button>
+				</td>
+				<td  colspan="2" align="right">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+<script>
+	$('#datanewprod').submit(function() {
+		formData = $('#datanewprod').serialize();
+		//melakukan serialisasi objek datanewdisplay
+		$.ajax({
+			url : '/saveprod',
+			type : 'POST',
+			data : formData,
+			success : function(result) {
+				loadlistprod();
+				alert("Data telah ditambahkan");
+				closemodal();
+			}
+		});
+		return false;
+	});
+</script>
+</html>

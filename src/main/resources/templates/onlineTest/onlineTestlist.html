@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- <script src="../js/jquery.dataTables.min.js"></script>
+<link href="../css/jquery.dataTables.min.css" rel="stylesheet"> -->
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="row">
+		<div class="form-group col-md-8">
+			<!-- 	<input type="text" class="form-control" placeholder="Type Here"
+					id="search-field"> -->
+			<h3>Aktivasi Akun Tes Online</h3>
+		</div>
+		<div class="form-group col-md-4" align="right">
+			<button type="button" class="btn btn-success"
+				style="background-color: rgb(0, 0, 102);" id="btn-add" onclick="addform()">Aktifkan</button>
+			<!-- <i class="fa fa-plus-circle"
+						style="font-size: 24px; cursor: pointer; color: rgb(0, 0, 102);"
+						id="btn-add" onclick="addform()"></i> -->
+			</div>
+	</div>
+	<table style="width: 100%;">
+		<thead>
+			<tr style="border-bottom: 3px solid rgb(0, 0, 102);">
+				<th style="width: 100%;"></th>
+			</tr>
+		</thead>
+	</table>
+	<div class="row">
+		<div class="form-group col-md-12">
+			<div class="form-group col-md-4" align="left">
+				<label>Username: User Id - Tidak Aktif</label> <br> <label>Password:
+					User Id</label>
+			</div>
+		</div>
+	</div>
+	<table style="width: 100%;" id="tbonlineTest" class="table table-striped">
+		<thead>
+			<tr
+				style="border-bottom: 3px solid rgb(0, 0, 102); color: rgb(0, 0, 102);">
+				<th class="no-sort" font="">KODE PERIODE</th>
+				<th>PERIODE</th>
+				<th class="no-sort">TGL. TES</th>
+				<th class="no-sort">TGL. BERAKHIR TES</th>
+				<th class="no-sort">AKSES</th>
+				<th class="no-sort">STATUS</th>
+				<th class="no-sort">#</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr
+				style="border-top: 2px solid rgb(0, 0, 102); color: rgb(0, 0, 102);"
+				th:each="onlineTest : ${listOnlineTest}">
+
+				<td style="width: 12%;"  th:text="${onlineTest.periodCode}">hubungan</td>
+				<td style="width: 12%;" th:text="${onlineTest.period}">Nama</td>
+				<td style="width: 12%;" th:text="${onlineTest.testDate}">JK</td>
+				<td style="width: 20%;" th:text="${onlineTest.expiredTest}">tgl.lahir</td>
+				<td style="width: 7%;" th:text="${onlineTest.userAccess}">pendidikan</td>
+				<td style="width: 7%;" th:text="${onlineTest.status}">pekerjaan</td>
+
+				<td style="width: 7%;">
+
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button"
+							data-toggle="dropdown" style="background-color: rgb(0, 0, 102);">
+							More <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li class="dropdown-item"
+								th:href="@{'/olnedit/' + ${onlineTest.idoln}}"
+								onclick="EditFunctionEdit(this);"
+								data-target="#pilihanonlineTestModal"><a>Tampilkan pilihan tes</a></li>
+							<li class="dropdown-item"
+								th:href="@{'/olneditdel/' + ${onlineTest.idoln}}"
+								onclick="EditFunction(this);" data-target="#deleteonlineTestModal"><a>Hapus</a></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+
+		<tfoot>
+		</tfoot>
+
+	</table>
+</body>
+<script>
+	function EditFunctionEdit(d) {
+		var x = d.getAttribute("href");
+		$.ajax({
+			url : x,
+			type : 'get',
+			dataType : 'html',
+			success : function(result) {
+				$("#pilihanonlineTestModal").modal();
+				$('#nonpilihanlistonlineTest').html(result);
+			}
+		});
+
+	}
+	function EditFunction(d) {
+		var x = d.getAttribute("href");
+		$.ajax({
+			url : x,
+			type : 'get',
+			dataType : 'html',
+			success : function(result) {
+				$("#deleteonlineTestModal").modal();
+				$('#nondeletelistonlineTest').html(result);
+			}
+		});
+
+	}
+
+	function addform() {
+		$.ajax({
+			url : 'onlineTestnew',
+			type : 'get',
+			dataType : 'html',
+			success : function(result) {
+				$("#onlineTestModal").modal();
+				$('#nonlistonlineTest').html(result);
+			}
+		});
+	}
+	function addform1() {
+		$.ajax({
+			url : 'onlineTestadd',
+			type : 'get',
+			dataType : 'html',
+			success : function(result) {
+				$("#addonlineTestModal").modal();
+				$('#nonaddlistonlineTest').html(result);
+			}
+		});
+	}
+
+</script>
+</html>

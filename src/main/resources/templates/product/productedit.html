@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form id="dataeditprod" action="#" th:object="${product}" method="post">
+
+		<table style="width:100%" align="center" >
+			<tr>
+				<td></td>
+				<td><input type="text" th:field="*{idprod}" readonly="readonly" />
+				</td>
+			</tr>
+			<tr>
+				<td>Product Name:</td>
+				<td><input type="text" th:field="*{nama}" /></td>
+			</tr>
+			<tr>
+				<td>Product Brand:</td>
+				<td><input type="text" th:field="*{brand}" /></td>
+			</tr>
+			<tr>
+				<td>Product Made in:</td>
+				<td><input type="text" th:field="*{made}" /></td>
+			</tr>
+			<tr>
+				<td>Product Price:</td>
+				<td><input type="text" th:field="*{price}" /></td>
+			</tr>
+			<tr>
+				<td>Product Supplier Id:</td>
+				<td><select name="id_supplier" th:field="*{id_supplier}">
+						<option value="0">-- supplier id --</option>
+						<option th:each="sply : ${listSupplier}" th:value="${sply.idsply}"
+							th:utext="${sply.nama}" />
+				</select></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="left">
+					<button type="submit" id="form-prod-add" class="btn btn-success">Save</button>
+				</td>
+				<td  colspan="2" align="right">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+<script>
+//suplier edit
+$('#dataeditprod').submit(function() {
+	formData = $('#dataeditprod').serialize();
+	$.ajax({
+		url : '/saveprod',
+		type : 'POST',
+		data : formData,
+		success : function(result) {
+		
+				loadlistprod();
+				alert("Data telah diubah");
+				closemodal();
+		}
+	});
+	return false;
+});
+
+</script>
+</html>

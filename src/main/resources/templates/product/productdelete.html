@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form id="datadeleteprod" action="#" th:object="${product}"
+		method="post">
+
+		<table style="width:100%" align="center" >
+			<tr>
+				<td></td>
+				<td><input type="text" th:field="*{idprod}" readonly="readonly" />
+				</td>
+			</tr>
+			<tr>
+				<td>Product Name:</td>
+				<td><input type="text" th:field="*{nama}" disabled="disabled" /></td>
+			</tr>
+			<tr>
+				<td>Product Brand:</td>
+				<td><input type="text" th:field="*{brand}" disabled="disabled" /></td>
+			</tr>
+			<tr>
+				<td>Product Made in:</td>
+				<td><input type="text" th:field="*{made}" disabled="disabled" /></td>
+			</tr>
+			<tr>
+				<td>Product Price:</td>
+				<td><input type="text" th:field="*{price}" disabled="disabled" /></td>
+			</tr>
+			<tr>
+				<td>Product Supplier Id:</td>
+				<td><input type="text" th:field="*{id_supplier}"
+					disabled="disabled" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="left">
+					<button type="submit" id="form-prod-add" class="btn btn-danger">Delete</button>
+				</td>
+				<td colspan="2" align="right">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+<script>
+	//suplier edit
+	$('#datadeleteprod').submit(function() {
+		var txt;
+		var r = confirm("press a button")
+		if (r == true) {
+			formData = $('#datadeleteprod').serialize();
+			var id = document.getElementById("idprod").value;
+			var url = "deleteprod/" + id;
+
+			$.ajax({
+				url : url,
+				type : 'POST',
+				data : formData,
+				success : function(result) {
+
+					loadlistprod();
+					alert("Data telah dihapus");
+					closemodal();
+				}
+			});
+		} else {
+			txt = "you press cancel";
+
+		}
+		return false;
+	});
+</script>
+</html>
